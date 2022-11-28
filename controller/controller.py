@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 import datetime
-from validator.validate_request import schema
+from model.user import userSchema
 
 # connecting to mongo db
 client = MongoClient('mongodb://localhost:27017/')
@@ -10,7 +10,7 @@ db = client['user-db']
 
 # creating collection
 if "user-collection" not in db.list_collection_names():
-    collection = db.create_collection("user-collection", validator=schema)
+    collection = db.create_collection("user-collection", validator=userSchema)
 else:
     collection = db["user-collection"]
 

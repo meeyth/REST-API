@@ -1,4 +1,4 @@
-schema = {
+userSchema = {
     "$jsonSchema": {
         "bsonType": "object",
         "required": ["name", "username", "age"],

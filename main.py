@@ -1,12 +1,12 @@
 from flask import Flask, jsonify, request
-import database_handler.db_handler as db_handler
+from controller import controller
 
 app = Flask(__name__)
 
 
 @app.get('/user-data/<int:_id>')
 def home(_id):
-    res = db_handler.get_data(_id)
+    res = controller.get_data(_id)
     if res:
         return res
 
@@ -18,9 +18,9 @@ def home(_id):
 @app.post('/user-data')
 def homePost():
     body = request.get_json()
-    body |= {'_id': db_handler.collection_len() + 1}
+    body |= {'_id': controller.collection_len() + 1}
     try:
-        db_handler.post_data(body)
+        controller.post_data(body)
     except Exception as e:
         res = jsonify(
             {'errmsg': 'Document failed validation',
@@ -37,7 +37,7 @@ def homePut(_id):
     body = request.get_json()
 
     try:
-        db_handler.put_data(body, _id)
+        controller.put_data(body, _id)
     except Exception as e:
         res = jsonify(
             {'errmsg': 'Document failed validation',
@@ -52,7 +52,7 @@ def homePut(_id):
 
 @app.delete('/user-data/<int:_id>')
 def homeDelete(_id):
-    res = db_handler.delete_data(_id)
+    res = controller.delete_data(_id)
     if res:
         return res
 
@@ -64,7 +64,7 @@ def homeDelete(_id):
 @app.patch('/user-data/<int:_id>')
 def homePatch(_id):
     body = request.get_json()
-    res = db_handler.patch_data(body, _id)
+    res = controller.patch_data(body, _id)
     if res:
         return res
 
